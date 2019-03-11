@@ -1,0 +1,14 @@
+#leftArrow, #rightArrow
+{
+	width: 15%;
+	display: inline-block;
+	text-align: center;
+}
+
+#middle
+{
+	display: inline-block;
+	background-color: red;
+	width: 69%;
+	text-align: center;
+}
