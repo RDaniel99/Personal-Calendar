@@ -19,3 +19,9 @@
 {
 	text-align: center;
 }
+
+.head-class
+{
+	display: inline-block;
+	width: 13%;
+}
