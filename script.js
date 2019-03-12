@@ -15,6 +15,31 @@ function startup()
 		day = month = 3;
 		year = 2019;
 	}
+
+	// 6 weeks, 7 days = 42 days (are enough)
+
+	var divMid = document.getElementById('container-mid');
+	for(var i = 0; i < 42; i++)
+	{
+		var newDiv = document.createElement("div");
+		newDiv.style.width = "13%";
+		newDiv.style.height = "100px";
+		newDiv.style.display = "inline-block";
+		
+		if(i % 2 == 0)
+		{
+			newDiv.style.background = "white";
+		}
+		else 
+		{
+			newDiv.style.background = "grey";
+		}
+
+		newDiv.innerHTML += (i + 1);
+		newDiv.style.color = "black";
+
+		divMid.appendChild(newDiv);
+	}
 }
 
 function changeMonth(sign)

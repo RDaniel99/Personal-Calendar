@@ -1,6 +1,7 @@
 #leftArrow, #rightArrow
 {
 	width: 15%;
+	height: 20%;
 	display: inline-block;
 	text-align: center;
 }
@@ -8,7 +9,13 @@
 #middle
 {
 	display: inline-block;
-	background-color: red;
+	background-color: grey;
+	color: black;
 	width: 69%;
+	text-align: center;
+}
+
+#container-mid
+{
 	text-align: center;
 }
