@@ -9,13 +9,12 @@
 #middle
 {
 	display: inline-block;
-	background-color: grey;
 	color: black;
-	width: 69%;
+	width: 68%;
 	text-align: center;
 }
 
-#container-mid
+#container-mid, #headers
 {
 	text-align: center;
 }
@@ -24,4 +23,10 @@
 {
 	display: inline-block;
 	width: 13%;
+}
+
+.head-class, #middle, .divDate {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
 }

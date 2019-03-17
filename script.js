@@ -47,22 +47,15 @@ function startup()
 	for(let i = 0; i < 42; i++)
 	{
 		let newDiv = document.createElement("div");
+		
 		newDiv.id = "divDate" + (i + 1);
+		newDiv.setAttribute("class", "divDate");
+
 		newDiv.style.width = "13%";
 		newDiv.style.height = "100px";
 		newDiv.style.display = "inline-block";
-		
-		if(i % 2 == 0)
-		{
-			newDiv.style.background = "white";
-		}
-		else 
-		{
-			newDiv.style.background = "grey";
-		}
 
 		newDiv.innerHTML += (i + 1);
-		newDiv.style.color = "black";
 
 		divMid.appendChild(newDiv);
 	}
