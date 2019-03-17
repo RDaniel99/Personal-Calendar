@@ -59,6 +59,39 @@ function startup()
 
 		divMid.appendChild(newDiv);
 	}
+
+	repairMonth();
+}
+
+function getLastDayOfMonthYear(month, year)
+{
+	if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+	{
+		return 31;
+	}
+
+	if(month == 4 || month == 6 || month == 9 || month == 11) {
+		return 30;
+	}
+
+	if(year % 4 != 0) return 28;
+	if(year % 100 != 0) return 29;
+	if(year % 400 != 0) return 28;
+
+	return 29;
+}
+
+function dayOfTheWeek(day, month, year)
+{
+	let t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+	if(month < 3)
+	{
+		year = year - 1;
+	}
+
+	let result = (year + parseInt(year / 4) - parseInt(year / 100) + parseInt(year / 400) + t[month - 1] + day) % 7;
+	if(result == 0) result = 7;
+	return result;
 }
 
 function changeMonth(sign)
@@ -79,6 +112,33 @@ function changeMonth(sign)
 	let x = document.getElementById('middle');
 
 	x.textContent = day + ' ' + getStringForMonthIndex(month) + ' ' + year;
+
+	repairMonth();
+}
+
+function repairMonth()
+{
+	for(let i = 1; i <= 42; i++) {
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+		x.style.opacity = "100";
+	}
+
+	let firstDay = dayOfTheWeek(1, month, year);
+	let lastDay  = getLastDayOfMonthYear(month, year);
+
+	for(let i = 1; i < firstDay; i++)
+	{
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+		x.style.opacity = "0";
+	}
+
+	for(let i = firstDay + lastDay; i <= 42; ++i) {
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+		x.style.opacity = "0";
+	}
 }
 
 function getStringForMonthIndex(idx)
@@ -96,6 +156,9 @@ function getStringForMonthIndex(idx)
 	if(idx == 11) return "November";
 	if(idx == 12) return "December";
 }
+
+
+
 
 $(document).ready(function() {
 	startup();
