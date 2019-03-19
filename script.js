@@ -1,28 +1,34 @@
 var day;
 var month;
 var year;
+var contorEvent = 0;
 
-var leftArr = document.getElementById('leftArrow');
-var rightArr = document.getElementById('rightArrow');
+var leftArr 		= document.getElementById('leftArrow');
+var rightArr 		= document.getElementById('rightArrow');
+var previewPage 	= document.getElementById('preview');
+var addButton 		= document.getElementById('add');
+var deleteButton 	= document.getElementById('delete');
+var modifyButton 	= document.getElementById('modify');
 
 //////////////////////////////////////////////////////////////
 //////////////// Object types ////////////////////////////////
 //////////////////////////////////////////////////////////////
 var timeObject = function(hour, minute) {
-	this._hour = hour;
-	this._minute = minute;
+	this._hour = hour;     // number
+	this._minute = minute; // number
 }
 
 var dateObject 	= function(day, month, year) {
-	this._day 	= day;
-	this._month = month;
-	this._year 	= year;
+	this._day 	= day;   // number
+	this._month = month; // number
+	this._year 	= year;  // number
 };
 
-var eventObject = function(start, end, date) {
-	this._startTime = start;
-	this._endTime	= end;
-	this._date		= date;
+var eventObject = function(start, end, date, id) {
+	this._startTime = start; // timeObject
+	this._endTime	= end;   // timeObject
+	this._date		= date;  // dateObject
+	this._id		= id;    // number
 }
 //////////////////////////////////////////////////////////////
 // To Do: Event type, location, description
@@ -75,7 +81,7 @@ function getLastDayOfMonthYear(month, year)
 		return 30;
 	}
 
-	if(year % 4 != 0) return 28;
+	if(year % 4 != 0) 	return 28;
 	if(year % 100 != 0) return 29;
 	if(year % 400 != 0) return 28;
 
@@ -123,6 +129,7 @@ function colorSelectedDate(idx)
 	let x = document.getElementById('middle');
 
 	x.innerHTML = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
+	setPreviewPage(day, month, year);
 }
 
 function changeMonth(sign)
@@ -170,6 +177,7 @@ function repairMonth()
 
 	let previousMonth = (month == 1 ? 12 : month - 1);
 	let previousYear  = (month == 1 ? year - 1 : year);
+
 	for(let i = 1, j = getLastDayOfMonthYear(previousMonth, previousYear) - firstDay + 2; i < firstDay; i++, j++)
 	{
 		let idString = "divDate" + i;
@@ -215,22 +223,24 @@ function repairMonth()
 			});
 		}
 	}
+
+	setPreviewPage(day, month, year);
 }
 
 function getStringFromMonthIndex(idx)
 {
-	if(idx == 1) return "January";
-	if(idx == 2) return "February";
-	if(idx == 3) return "March";
-	if(idx == 4) return "April";
-	if(idx == 5) return "May";
-	if(idx == 6) return "June";
-	if(idx == 7) return "July";
-	if(idx == 8) return "August";
-	if(idx == 9) return "September";
-	if(idx == 10) return "Octomber";
-	if(idx == 11) return "November";
-	if(idx == 12) return "December";
+	if(idx == 1)  return 	"January";
+	if(idx == 2)  return 	"February";
+	if(idx == 3)  return 	"March";
+	if(idx == 4)  return 	"April";
+	if(idx == 5)  return 	"May";
+	if(idx == 6)  return 	"June";
+	if(idx == 7)  return 	"July";
+	if(idx == 8)  return 	"August";
+	if(idx == 9)  return 	"September";
+	if(idx == 10) return 	"Octomber";
+	if(idx == 11) return 	"November";
+	if(idx == 12) return 	"December";
 }
 
 function getMonthIndexFromString(string)
@@ -244,6 +254,10 @@ function getMonthIndexFromString(string)
 	}
 }
 
+function setPreviewPage(day, month, year)
+{
+	preview.innerHTML = "<h1>Plan for: " + day + " " + getStringFromMonthIndex(month) + " " + year + "</h1>";
+}
 
 
 $(document).ready(function() {
@@ -255,5 +269,9 @@ $(document).ready(function() {
 
 	rightArr.addEventListener("click", function() {
 		changeMonth(1);
+	});
+
+	add.addEventListener("click", function() {
+		
 	});
 });
