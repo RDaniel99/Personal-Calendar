@@ -61,6 +61,7 @@ function startup()
 	}
 
 	repairMonth();
+	colorSelectedDate(day);
 }
 
 function getLastDayOfMonthYear(month, year)
@@ -94,6 +95,36 @@ function dayOfTheWeek(day, month, year)
 	return result;
 }
 
+function colorSelectedDate(idx)
+{
+	for(let i = 1; i <= 42; ++i)
+	{
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+
+		if(x.style.backgroundColor == "blue") {
+			x.style.backgroundColor = "#74a4f2";
+			break;
+		}
+	}
+
+	for(let i = 1; i <= 42; ++i) {
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+
+		if(x.innerHTML == idx) {
+			x.style.backgroundColor = "blue";
+			break;
+		}
+	}
+
+	day = idx;
+
+	let x = document.getElementById('middle');
+
+	x.innerHTML = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
+}
+
 function changeMonth(sign)
 {
 	month = month + sign;
@@ -114,10 +145,20 @@ function changeMonth(sign)
 	x.textContent = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
 
 	repairMonth();
+	colorSelectedDate(day);
 }
 
 function repairMonth()
 {
+	for(let i = 1; i <= 42; ++i) {
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+
+		x.removeEventListener("click", function() {
+				colorSelectedDate(x.innerHTML);
+			});
+	}
+
 	for(let i = 1; i <= 42; i++) {
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
@@ -161,6 +202,19 @@ function repairMonth()
 		let x = document.getElementById(idString);
 		x.innerHTML = j;
 	}
+
+	for(let i = 1; i <= 42; ++i)
+	{
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+
+		if(x.style.opacity == "1")
+		{
+			x.addEventListener("click", function() {
+				colorSelectedDate(x.innerHTML);
+			});
+		}
+	}
 }
 
 function getStringFromMonthIndex(idx)
@@ -203,5 +257,16 @@ $(document).ready(function() {
 		changeMonth(1);
 	});
 
-	
+	for(let i = 1; i <= 42; ++i)
+	{
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+
+		if(x.style.opacity == "1")
+		{
+			x.addEventListener("click", function() {
+				colorSelectedDate(x.innerHTML);
+			});
+		}
+	}
 });
