@@ -121,23 +121,45 @@ function repairMonth()
 	for(let i = 1; i <= 42; i++) {
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
-		x.style.opacity = "100";
+		x.style.opacity = "1";
 	}
 
 	let firstDay = dayOfTheWeek(1, month, year);
 	let lastDay  = getLastDayOfMonthYear(month, year);
 
-	for(let i = 1; i < firstDay; i++)
+	let previousMonth = (month == 1 ? 12 : month - 1);
+	let previousYear  = (month == 1 ? year - 1 : year);
+	for(let i = 1, j = getLastDayOfMonthYear(previousMonth, previousYear) - firstDay + 2; i < firstDay; i++, j++)
 	{
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
-		x.style.opacity = "0";
+		x.style.opacity = "0.5";
+		x.innerHTML = j;
 	}
 
-	for(let i = firstDay + lastDay; i <= 42; ++i) {
+	let flag = false;
+	if((firstDay + lastDay - 1) % 7 == 0) flag = true;
+	for(let i = firstDay + lastDay, j = 1; i <= 42; ++i, j++) {
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
-		x.style.opacity = "0";
+		if(flag == true) {
+			x.style.opacity = "0";
+		}
+		else {
+			x.style.opacity = "0.5";
+			x.innerHTML = j;
+		}
+
+		if((i - 1) % 7 == 6) {
+			flag = true;
+		}
+	}
+
+	for(let i = firstDay, j = 1; i < firstDay + lastDay;i++, j++)
+	{
+		let idString = "divDate" + i;
+		let x = document.getElementById(idString);
+		x.innerHTML = j;
 	}
 }
 
