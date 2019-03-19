@@ -112,7 +112,7 @@ function colorSelectedDate(idx)
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
 
-		if(x.innerHTML == idx) {
+		if(x.innerHTML == idx && x.style.opacity == "1") {
 			x.style.backgroundColor = "blue";
 			break;
 		}
@@ -256,17 +256,4 @@ $(document).ready(function() {
 	rightArr.addEventListener("click", function() {
 		changeMonth(1);
 	});
-
-	for(let i = 1; i <= 42; ++i)
-	{
-		let idString = "divDate" + i;
-		let x = document.getElementById(idString);
-
-		if(x.style.opacity == "1")
-		{
-			x.addEventListener("click", function() {
-				colorSelectedDate(x.innerHTML);
-			});
-		}
-	}
 });
