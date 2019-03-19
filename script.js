@@ -38,7 +38,7 @@ function startup()
 	{
 		day = month = 3;
 		year = 2019;
-		x.textContent = day + ' ' + getStringForMonthIndex(month) + ' ' + year;
+		x.textContent = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
 	}
 
 	// 6 weeks, 7 days = 42 days (are enough)
@@ -111,7 +111,7 @@ function changeMonth(sign)
 
 	let x = document.getElementById('middle');
 
-	x.textContent = day + ' ' + getStringForMonthIndex(month) + ' ' + year;
+	x.textContent = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
 
 	repairMonth();
 }
@@ -163,7 +163,7 @@ function repairMonth()
 	}
 }
 
-function getStringForMonthIndex(idx)
+function getStringFromMonthIndex(idx)
 {
 	if(idx == 1) return "January";
 	if(idx == 2) return "February";
@@ -179,15 +179,29 @@ function getStringForMonthIndex(idx)
 	if(idx == 12) return "December";
 }
 
+function getMonthIndexFromString(string)
+{
+	for(let i = 1; i <= 12; ++i)
+	{
+		if(getStringFromMonthIndex(i) == string)
+		{
+			return i;
+		}
+	}
+}
 
 
 
 $(document).ready(function() {
 	startup();
+	
 	leftArr.addEventListener("click", function() {
 		changeMonth(-1);
 	});
+
 	rightArr.addEventListener("click", function() {
 		changeMonth(1);
 	});
+
+	
 });
