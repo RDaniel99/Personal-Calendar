@@ -25,6 +25,8 @@ var eventObject = function(start, end, id) {
 	this._endDate	= end;   // dateObject
 	this._id		= id;    // number
 }
+
+var eventsArray = [];
 //////////////////////////////////////////////////////////////
 // To Do: Event type, location, description
 
@@ -261,7 +263,51 @@ function addFormAdd()
 
 function pressedSendAddEvent()
 {
+	let startInput = document.getElementById('dateStart').value;
+	let endInput = document.getElementById('dateEnd').value;
 	
+	if(startInput.length != 10 || endInput.length != 10) {
+		alert("Wrong date format!");
+		return ;
+	}
+
+	if(startInput.charAt(2) != '/' || startInput.charAt(5) != '/' ||
+	   endInput.charAt(2) != '/' || endInput.charAt(5) != '/') {
+		alert("Wrong date format");
+		return ;
+	}
+
+	let dayStart = startInput.substr(0, 2);
+	let monthStart = startInput.substr(3, 2);
+	let yearStart = startInput.substr(6, 4);
+
+	let dayFinish = endInput.substr(0, 2);
+	let monthFinish = endInput.substr(3, 2);
+	let yearFinish = endInput.substr(6, 4);
+
+	if(isNaN(dayStart) || isNaN(monthStart) || isNaN(yearStart) ||
+		isNaN(dayFinish) || isNaN(monthFinish) || isNaN(yearFinish)) {
+		alert("Wrong date format");
+		return ;
+	}
+
+	let newEventDate = new eventObject;
+	newEventDate._startDate = new dateObject;
+	newEventDate._endDate = new dateObject;
+
+	newEventDate._startDate._day = parseInt(dayStart);
+	newEventDate._startDate._month = parseInt(monthStart);
+	newEventDate._startDate._year = parseInt(yearStart);
+
+	newEventDate._endDate._day = parseInt(dayFinish);
+	newEventDate._endDate._month = parseInt(monthFinish);
+	newEventDate._endDate._year = parseInt(yearFinish);
+
+	newEventDate._id = contorEvent;
+	++contorEvent;
+
+	eventsArray.push(newEventDate);
+
 	alert("Event added!");
 	formAdd.style.visibility = "hidden";
 }
