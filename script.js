@@ -9,25 +9,20 @@ var previewPage 	= document.getElementById('preview');
 var addButton 		= document.getElementById('add');
 var deleteButton 	= document.getElementById('delete');
 var modifyButton 	= document.getElementById('modify');
+var formAddToAdd	= document.getElementById('formAdd');
 
 //////////////////////////////////////////////////////////////
 //////////////// Object types ////////////////////////////////
 //////////////////////////////////////////////////////////////
-var timeObject = function(hour, minute) {
-	this._hour = hour;     // number
-	this._minute = minute; // number
-}
-
 var dateObject 	= function(day, month, year) {
 	this._day 	= day;   // number
 	this._month = month; // number
 	this._year 	= year;  // number
 };
 
-var eventObject = function(start, end, date, id) {
-	this._startTime = start; // timeObject
-	this._endTime	= end;   // timeObject
-	this._date		= date;  // dateObject
+var eventObject = function(start, end, id) {
+	this._startDate = start; // dateObject
+	this._endDate	= end;   // dateObject
 	this._id		= id;    // number
 }
 //////////////////////////////////////////////////////////////
@@ -259,9 +254,28 @@ function setPreviewPage(day, month, year)
 	preview.innerHTML = "<h1>Plan for: " + day + " " + getStringFromMonthIndex(month) + " " + year + "</h1>";
 }
 
+function addFormAdd()
+{
+	formAdd.style.visibility = "visible";
+}
+
+function pressedSendAddEvent()
+{
+	
+	alert("Event added!");
+	formAdd.style.visibility = "hidden";
+}
+
+function pressedCancelAddEvent()
+{
+	formAdd.style.visibility = "hidden";
+}
+
 
 $(document).ready(function() {
 	startup();
+
+	formAdd.style.visibility = "hidden";
 	
 	leftArr.addEventListener("click", function() {
 		changeMonth(-1);
@@ -272,6 +286,6 @@ $(document).ready(function() {
 	});
 
 	add.addEventListener("click", function() {
-		
+		addFormAdd();
 	});
 });
