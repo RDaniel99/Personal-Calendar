@@ -10,6 +10,7 @@ var addButton 		= document.getElementById('add');
 var deleteButton 	= document.getElementById('delete');
 var modifyButton 	= document.getElementById('modify');
 var formAddToAdd	= document.getElementById('formAdd');
+var contentPreview  = document.getElementById('content-preview');
 
 //////////////////////////////////////////////////////////////
 //////////////// Object types ////////////////////////////////
@@ -65,6 +66,7 @@ function startup()
 
 	repairMonth();
 	colorSelectedDate(day);
+	repairContentPreview();
 }
 
 function getLastDayOfMonthYear(month, year)
@@ -150,6 +152,7 @@ function changeMonth(sign)
 
 	repairMonth();
 	colorSelectedDate(day);
+	repairContentPreview();
 }
 
 function repairMonth()
@@ -222,6 +225,39 @@ function repairMonth()
 	}
 
 	setPreviewPage(day, month, year);
+}
+
+function repairContentPreview()
+{
+	contentPreview.innerHTML = "";
+
+	for(let i = 0; i < eventsArray.length; i++)
+	{
+		let flag = false;
+
+		if(eventsArray[i]._endDate._year < year ||
+			(eventsArray[i]._endDate._year == year && eventsArray[i]._endDate._month < month) ||
+			(eventsArray[i]._endDate._year == year && eventsArray[i]._endDate._month == month && eventsArray[i]._endDate._day < day))
+		{
+			flag = true;
+		}
+
+		if(eventsArray[i]._startDate._year > year ||
+			(eventsArray[i]._startDate._year == year && eventsArray[i]._startDate._month > month) ||
+			(eventsArray[i]._startDate._year == year && eventsArray[i]._startDate._month == month && eventsArray[i]._startDate._day > day))
+		{
+			flag = true;
+		}
+
+		if(flag == false)
+		{
+			contentPreview.innerHTML += "Event ID: " + eventsArray[i]._id + "<br>";
+			contentPreview.innerHTML += "Start Date: " + eventsArray[i]._startDate._day + "-";
+			contentPreview.innerHTML += eventsArray[i]._startDate._month + "-" + eventsArray[i]._startDate._year + "<br>";
+			contentPreview.innerHTML += "Start Date: " + eventsArray[i]._endDate._day + "-";
+			contentPreview.innerHTML += eventsArray[i]._endDate._month + "-" + eventsArray[i]._endDate._year + "<br>";
+		}
+	}
 }
 
 function getStringFromMonthIndex(idx)
@@ -310,6 +346,8 @@ function pressedSendAddEvent()
 
 	alert("Event added!");
 	formAdd.style.visibility = "hidden";
+
+	repairContentPreview();
 }
 
 function pressedCancelAddEvent()
