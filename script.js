@@ -1,6 +1,6 @@
-var day;
-var month;
-var year;
+var day = 3;
+var month = 3;
+var year = 2019;
 var contorEvent = 0;
 
 var leftArr 		= document.getElementById('leftArrow');
@@ -32,17 +32,31 @@ var eventsArray = [];
 // To Do: Event type, location, description
 
 
-
+function updateLocalStorage()
+{
+	localStorage.setItem("day", day);
+	localStorage.setItem("month", month);
+	localStorage.setItem("year", year);
+	localStorage.setItem("contorEvent", contorEvent);
+	localStorage.setItem("events", JSON.stringify(eventsArray));
+}
 
 function startup()
 {
 	let x = document.getElementById('middle');
 
-	if(x.textContent == '')
+	if(localStorage.getItem("day") == null)
 	{
 		day = month = 3;
 		year = 2019;
 		x.textContent = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
+	}
+	else {
+		day = parseInt(localStorage.getItem("day"));
+		month = parseInt(localStorage.getItem("month"));
+		year = parseInt(localStorage.getItem("year"));
+		contorEvent = parseInt(localStorage.getItem("contorEvent"));
+		eventsArray = JSON.parse(localStorage.getItem("events"));
 	}
 
 	// 6 weeks, 7 days = 42 days (are enough)
@@ -254,8 +268,8 @@ function repairContentPreview()
 			contentPreview.innerHTML += "Event ID: " + eventsArray[i]._id + "<br>";
 			contentPreview.innerHTML += "Start Date: " + eventsArray[i]._startDate._day + "-";
 			contentPreview.innerHTML += eventsArray[i]._startDate._month + "-" + eventsArray[i]._startDate._year + "<br>";
-			contentPreview.innerHTML += "Start Date: " + eventsArray[i]._endDate._day + "-";
-			contentPreview.innerHTML += eventsArray[i]._endDate._month + "-" + eventsArray[i]._endDate._year + "<br>";
+			contentPreview.innerHTML += "End Date: " + eventsArray[i]._endDate._day + "-";
+			contentPreview.innerHTML += eventsArray[i]._endDate._month + "-" + eventsArray[i]._endDate._year + "<br><br>";
 		}
 	}
 }
@@ -290,6 +304,8 @@ function getMonthIndexFromString(string)
 function setPreviewPage(day, month, year)
 {
 	preview.innerHTML = "<h1>Plan for: " + day + " " + getStringFromMonthIndex(month) + " " + year + "</h1>";
+
+	repairContentPreview();
 }
 
 function addFormAdd()
@@ -356,6 +372,10 @@ function pressedCancelAddEvent()
 }
 
 
+
+
+
+
 $(document).ready(function() {
 	startup();
 
@@ -373,3 +393,5 @@ $(document).ready(function() {
 		addFormAdd();
 	});
 });
+
+setInterval(updateLocalStorage, 3000);
