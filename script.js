@@ -313,6 +313,32 @@ function addFormAdd()
 	formAdd.style.visibility = "visible";
 }
 
+function pressedDeleteEvent()
+{
+	let deletedId = prompt("ID Event to delete:" );
+
+	if(isNaN(deletedId) || !(!isNaN(deletedId) && 0 <= parseInt(deletedId) && parseInt(deletedId) <= contorEvent))
+	{
+		alert("ID-ul introdus este gresit.");
+	}
+	else {
+		for(let i = 0; i < eventsArray.length; i++)
+		{
+			if(eventsArray[i]._id == deletedId)
+			{
+				eventsArray[i] = eventsArray[eventsArray.length - 1];
+				eventsArray.pop();
+				alert("Event Deleted with success");
+				debugger;
+				repairContentPreview();
+				return ;
+			}
+		}
+
+		alert("Event ID not found");
+	}
+}
+
 function pressedSendAddEvent()
 {
 	let startInput = document.getElementById('dateStart').value;
