@@ -339,6 +339,107 @@ function pressedDeleteEvent()
 	}
 }
 
+function pressedModifyEvent()
+{
+	let newStartDate, 	dayStart, 	monthStart, yearStart, 	startInput	;
+	let newEndDate, 	dayEnd, 	monthEnd, 	yearEnd, 	endInput	;
+
+	let modifiedId = prompt("ID Event to modify: ");
+
+	if(isNaN(modifiedId) || !(!isNaN(modifiedId) && 0 <= parseInt(modifiedId) && parseInt(modifiedId) <= contorEvent))
+	{
+		alert("ID-ul introdus este gresit.");
+	}
+	else {
+		for(let i = 0; i < eventsArray.length; i++)
+		{
+			if(eventsArray[i]._id == modifiedId)
+			{
+				newStartDate = prompt("Start date: ");
+					
+				startInput = newStartDate;
+
+				if(startInput != null && startInput.length != 10) 
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				if(startInput != null && (startInput.charAt(2) != '/' || startInput.charAt(5) != '/'))
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				if(startInput != null)
+				{
+					dayStart = startInput.substr(0, 2);
+					monthStart = startInput.substr(3, 2);
+					yearStart = startInput.substr(6, 4);
+				}
+
+				if(startInput != null && (isNaN(dayStart) || isNaN(monthStart) || isNaN(yearStart)))
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				newEndDate = prompt("End date: ");
+
+				endInput = newEndDate;
+
+				if(endInput != null && endInput.length != 10) 
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				if(endInput != null && (endInput.charAt(2) != '/' || endInput.charAt(5) != '/'))
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				if(endInput != null)
+				{
+					dayEnd = endInput.substr(0, 2);
+					monthEnd = endInput.substr(3, 2);
+					yearEnd = endInput.substr(6, 4);
+				}
+
+				if(endInput != null && (isNaN(dayEnd) || isNaN(monthEnd) || isNaN(yearEnd)))
+				{
+					alert("Wrong date format");
+					return ;
+				}
+
+				if(newStartDate == null && newEndDate == null) {
+					alert("Event not modified!");
+					return ;
+				}
+
+				if(newStartDate != null)
+				{
+					eventsArray[i]._startDate._day = parseInt(dayStart);
+					eventsArray[i]._startDate._month = parseInt(monthStart);
+					eventsArray[i]._startDate._year = parseInt(yearStart);
+				}
+
+				if(newEndDate != null)
+				{
+					eventsArray[i]._endDate._day = parseInt(dayEnd);
+					eventsArray[i]._endDate._month = parseInt(monthEnd);
+					eventsArray[i]._endDate._year = parseInt(yearEnd);
+				}
+
+				alert("Event modified with succes!");
+				repairContentPreview();
+				return ;
+			}
+		}
+	}
+}
+
 function pressedSendAddEvent()
 {
 	let startInput = document.getElementById('dateStart').value;
