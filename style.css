@@ -37,11 +37,11 @@
 }
 
 .divDate:hover {
-	background-color: blue;
+	background-color: blue !important;
 	color: grey;
 }
 
 body {
-	background-color: #212320;
+	background-color: gray/*#212320*/;
 	color: #ebf2e8;
 }
