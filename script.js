@@ -276,18 +276,18 @@ function repairContentPreview()
 
 function getStringFromMonthIndex(idx)
 {
-	if(idx == 1)  return 	"January";
-	if(idx == 2)  return 	"February";
-	if(idx == 3)  return 	"March";
-	if(idx == 4)  return 	"April";
-	if(idx == 5)  return 	"May";
-	if(idx == 6)  return 	"June";
-	if(idx == 7)  return 	"July";
-	if(idx == 8)  return 	"August";
-	if(idx == 9)  return 	"September";
-	if(idx == 10) return 	"Octomber";
-	if(idx == 11) return 	"November";
-	if(idx == 12) return 	"December";
+	if(idx == 1)  return 	"January"	;
+	if(idx == 2)  return 	"February"	;
+	if(idx == 3)  return 	"March"		;
+	if(idx == 4)  return 	"April"		;
+	if(idx == 5)  return 	"May"		;
+	if(idx == 6)  return 	"June"		;
+	if(idx == 7)  return 	"July"		;
+	if(idx == 8)  return 	"August"	;
+	if(idx == 9)  return 	"September"	;
+	if(idx == 10) return 	"Octomber"	;
+	if(idx == 11) return 	"November"	;
+	if(idx == 12) return 	"December"	;
 }
 
 function getMonthIndexFromString(string)
