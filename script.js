@@ -493,6 +493,21 @@ function pressedSendAddEvent()
 	repairContentPreview();
 }
 
+function pressedTodayEvent()
+{
+	let today = new Date();
+	let dd = String(today.getDate()).padStart(2, '0');
+	let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	let yyyy = today.getFullYear();
+
+	day = parseInt(dd);
+	month = parseInt(mm);
+	year = parseInt(yyyy);
+
+	repairMonth();
+	colorSelectedDate(day);
+}
+
 function pressedCancelAddEvent()
 {
 	formAdd.style.visibility = "hidden";
