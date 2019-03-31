@@ -482,6 +482,8 @@ function pressedSendAddEvent()
 	newEventDate._endDate._month = parseInt(monthFinish);
 	newEventDate._endDate._year = parseInt(yearFinish);
 
+/// TO DO: De adaugat verificare data start <= end
+
 	newEventDate._id = contorEvent;
 	++contorEvent;
 
