@@ -17,6 +17,16 @@
 #container-mid, #headers
 {
 	text-align: center;
+	width: 100%;
+	display: inline-block;
+}
+
+#container-mid {
+}
+
+.divDate {
+	float: left;
+	position: relative;
 }
 
 .head-class
