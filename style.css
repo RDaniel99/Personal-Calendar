@@ -32,16 +32,38 @@
 }
 
 .divDate, .head-class, #middle {
-	background-color: #74a4f2;
+	background-color: #ffffff;
 	color: black;
 }
 
 .divDate:hover {
-	background-color: blue !important;
+	background-color: #ccccff !important;
 	color: grey;
 }
 
 body {
-	background-color: gray/*#212320*/;
-	color: #ebf2e8;
+	background-color: #f2f2f2/*#212320*/;
+	color: black;
+}
+
+button {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover {opacity: 1}
+
+h1 {
+	margin: 0px;
+	padding: 0px;
 }

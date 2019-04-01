@@ -47,8 +47,7 @@ function startup()
 
 	if(localStorage.getItem("day") == null)
 	{
-		day = month = 3;
-		year = 2019;
+		pressedTodayEvent();
 		x.textContent = day + ' ' + getStringFromMonthIndex(month) + ' ' + year;
 	}
 	else {
@@ -81,6 +80,7 @@ function startup()
 	repairMonth();
 	colorSelectedDate(day);
 	repairContentPreview();
+	pressedTodayEvent();
 }
 
 function getLastDayOfMonthYear(month, year)
@@ -121,8 +121,8 @@ function colorSelectedDate(idx)
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
 
-		if(x.style.backgroundColor == "blue") {
-			x.style.backgroundColor = "#74a4f2";
+		if(x.style.backgroundColor == "rgb(244, 81, 30)") {
+			x.style.backgroundColor = "#ffffff";
 			break;
 		}
 	}
@@ -132,7 +132,7 @@ function colorSelectedDate(idx)
 		let x = document.getElementById(idString);
 
 		if(x.innerHTML == idx && x.style.opacity == "1") {
-			x.style.backgroundColor = "blue";
+			x.style.backgroundColor = "rgb(244, 81, 30)";
 			break;
 		}
 	}
@@ -245,6 +245,8 @@ function repairContentPreview()
 {
 	contentPreview.innerHTML = "";
 
+	let sthPrinted = false;
+
 	for(let i = 0; i < eventsArray.length; i++)
 	{
 		let flag = false;
@@ -265,12 +267,19 @@ function repairContentPreview()
 
 		if(flag == false)
 		{
+			sthPrinted = true;
+
 			contentPreview.innerHTML += "Event ID: " + eventsArray[i]._id + "<br>";
 			contentPreview.innerHTML += "Start Date: " + eventsArray[i]._startDate._day + "-";
 			contentPreview.innerHTML += eventsArray[i]._startDate._month + "-" + eventsArray[i]._startDate._year + "<br>";
 			contentPreview.innerHTML += "End Date: " + eventsArray[i]._endDate._day + "-";
 			contentPreview.innerHTML += eventsArray[i]._endDate._month + "-" + eventsArray[i]._endDate._year + "<br><br>";
 		}
+	}
+
+	if(!sthPrinted)
+	{
+		contentPreview.innerHTML = "Nothing to display for today <br>"
 	}
 }
 
@@ -311,6 +320,13 @@ function setPreviewPage(day, month, year)
 function addFormAdd()
 {
 	formAdd.style.visibility = "visible";
+}
+
+function pressedResetEvent()
+{
+	contorEvent = 0;
+	eventsArray = [];
+	window.localStorage.clear();
 }
 
 function pressedDeleteEvent()
