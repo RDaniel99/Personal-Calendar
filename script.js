@@ -16,15 +16,16 @@ var contentPreview  = document.getElementById('content-preview');
 //////////////// Object types ////////////////////////////////
 //////////////////////////////////////////////////////////////
 var dateObject 	= function(day, month, year) {
-	this._day 	= day;   // number
-	this._month = month; // number
-	this._year 	= year;  // number
+	this._day 	= day;   // Number
+	this._month = month; // Number
+	this._year 	= year;  // Number
 };
 
-var eventObject = function(start, end, id) {
+var eventObject = function(start, end, id, color) {
 	this._startDate = start; // dateObject
 	this._endDate	= end;   // dateObject
-	this._id		= id;    // number
+	this._id		= id;    // Number
+	this._color 	= color; // String
 }
 
 var eventsArray = [];
@@ -81,6 +82,7 @@ function startup()
 	colorSelectedDate(day);
 	repairContentPreview();
 	pressedTodayEvent();
+	addEventsOnCalendar();
 }
 
 function getLastDayOfMonthYear(month, year)
@@ -131,7 +133,7 @@ function colorSelectedDate(idx)
 		let idString = "divDate" + i;
 		let x = document.getElementById(idString);
 
-		if(x.innerHTML == idx && x.style.opacity == "1") {
+		if(parseInt(x.innerHTML.substring(0, 2)) == idx && x.style.opacity == "1") {
 			x.style.backgroundColor = "rgb(244, 81, 30)";
 			break;
 		}
@@ -167,6 +169,7 @@ function changeMonth(sign)
 	repairMonth();
 	colorSelectedDate(day);
 	repairContentPreview();
+	addEventsOnCalendar();
 }
 
 function repairMonth()
@@ -176,7 +179,7 @@ function repairMonth()
 		let x = document.getElementById(idString);
 
 		x.removeEventListener("click", function() {
-				colorSelectedDate(x.innerHTML);
+				colorSelectedDate(parseInt(x.innerHTML.substring(0, 2)));
 			});
 	}
 
@@ -233,12 +236,13 @@ function repairMonth()
 		if(x.style.opacity == "1")
 		{
 			x.addEventListener("click", function() {
-				colorSelectedDate(x.innerHTML);
+				colorSelectedDate(parseInt(x.innerHTML.substring(0, 2)));
 			});
 		}
 	}
 
 	setPreviewPage(day, month, year);
+	addEventsOnCalendar();
 }
 
 function repairContentPreview()
@@ -327,6 +331,7 @@ function pressedResetEvent()
 	contorEvent = 0;
 	eventsArray = [];
 	window.localStorage.clear();
+	addEventsOnCalendar();
 }
 
 function pressedDeleteEvent()
@@ -345,8 +350,8 @@ function pressedDeleteEvent()
 				eventsArray[i] = eventsArray[eventsArray.length - 1];
 				eventsArray.pop();
 				alert("Event Deleted with success");
-				debugger;
 				repairContentPreview();
+				addEventsOnCalendar();
 				return ;
 			}
 		}
@@ -450,10 +455,70 @@ function pressedModifyEvent()
 
 				alert("Event modified with succes!");
 				repairContentPreview();
+				addEventsOnCalendar();
 				return ;
 			}
 		}
 	}
+}
+
+function addEventsOnCalendar()
+{
+	let tempDay = day;
+	day = 0;
+
+	for(let i = 1; i <= 42; ++i) 
+	{
+		let idString = 'divDate' + i;
+		let x = document.getElementById(idString);
+		let sthPrinted = 0;
+		let printedDay = parseInt(x.innerHTML.substring(0, 2));
+		x.innerHTML = printedDay;
+
+		if(x.style.opacity == "1")
+		{
+			day++;
+
+			for(let i = 0; i < eventsArray.length; i++)
+			{
+				let flag = false;
+
+				if(eventsArray[i]._endDate._year < year ||
+					(eventsArray[i]._endDate._year == year && eventsArray[i]._endDate._month < month) ||
+					(eventsArray[i]._endDate._year == year && eventsArray[i]._endDate._month == month && eventsArray[i]._endDate._day < day))
+				{
+					flag = true;
+				}
+
+				if(eventsArray[i]._startDate._year > year ||
+					(eventsArray[i]._startDate._year == year && eventsArray[i]._startDate._month > month) ||
+					(eventsArray[i]._startDate._year == year && eventsArray[i]._startDate._month == month && eventsArray[i]._startDate._day > day))
+				{
+					flag = true;
+				}
+
+				if(flag == false && sthPrinted < 3)
+				{
+					sthPrinted++;
+
+					let divEvent = document.createElement('div');
+					divEvent.style.backgroundColor = eventsArray[i]._color;
+					divEvent.innerHTML = "Event ID: " + eventsArray[i]._id;
+					x.appendChild(divEvent);
+				}
+			}
+		}
+
+		if(!sthPrinted && x.style.opacity == "1")
+		{
+			let divEvent = document.createElement('div');
+			divEvent.style.backgroundColor = "green";
+			divEvent.innerHTML = "Nothing";
+			x.appendChild(divEvent);
+		}
+	}
+
+	day = tempDay;
 }
 
 function pressedSendAddEvent()
@@ -498,10 +563,31 @@ function pressedSendAddEvent()
 	newEventDate._endDate._month = parseInt(monthFinish);
 	newEventDate._endDate._year = parseInt(yearFinish);
 
-/// TO DO: De adaugat verificare data start <= end
+	if(newEventDate._endDate._year < newEventDate._startDate._year)
+	{
+		alert("Wrong date");
+		return ;
+	}
+
+	if(newEventDate._endDate._year == newEventDate._startDate._year &&
+		newEventDate._endDate._month < newEventDate._startDate._month)
+	{
+		alert("Wrong date");
+		return ;
+	}
+
+	if(newEventDate._endDate._year == newEventDate._startDate._year &&
+		newEventDate._endDate._month == newEventDate._startDate._month &&
+		newEventDate._endDate._day < newEventDate._startDate._day)
+	{
+		alert("Wrong date");
+		return ;
+	}
 
 	newEventDate._id = contorEvent;
 	++contorEvent;
+	let e = document.getElementById("ddlViewBy");
+	newEventDate._color = e.options[e.selectedIndex].value;
 
 	eventsArray.push(newEventDate);
 
@@ -509,6 +595,7 @@ function pressedSendAddEvent()
 	formAdd.style.visibility = "hidden";
 
 	repairContentPreview();
+	addEventsOnCalendar();
 }
 
 function pressedTodayEvent()
