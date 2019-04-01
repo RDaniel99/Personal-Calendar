@@ -332,6 +332,7 @@ function pressedResetEvent()
 	eventsArray = [];
 	window.localStorage.clear();
 	addEventsOnCalendar();
+	repairContentPreview();
 }
 
 function pressedDeleteEvent()
